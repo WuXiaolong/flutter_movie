@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie/movie/list/movie_list_page.dart';
 
+//入口
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {

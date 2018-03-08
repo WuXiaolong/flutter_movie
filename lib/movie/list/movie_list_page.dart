@@ -9,25 +9,27 @@ class MovieListPage extends StatefulWidget {
 }
 
 class MovieListPageState extends State<MovieListPage> {
-  List<Movie> _movies = [];
+  List<Movie> movies = [];
 
   @override
   void initState() {
     super.initState();
+    //一进页面就请求接口，一开始不知道这个 initState 方法 ，折腾了很久
     getMovieListData();
   }
 
   @override
   Widget build(BuildContext context) {
     var content;
-    if (_movies.isEmpty) {
+    if (movies.isEmpty) {
       content = new Center(
+        // 可选参数 child:
         child: new CircularProgressIndicator(),
       );
     } else {
       content = new ListView.builder(
-        itemCount: _movies.length,
-        itemBuilder: _buildMovieItem,
+        itemCount: movies.length,
+        itemBuilder: buildMovieItem,
 
       );
     }
@@ -35,6 +37,15 @@ class MovieListPageState extends State<MovieListPage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('吴小龙同學'),
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.person),
+            onPressed: () {
+              print('onclick');
+            },
+
+          )
+        ],
       ),
       body: content,
 
@@ -45,13 +56,14 @@ class MovieListPageState extends State<MovieListPage> {
   navigateToMovieDetailPage(Movie movie, Object imageTag) {
     Navigator.of(context).push(
         new MaterialPageRoute(
-            builder: (c) {
+            builder: (BuildContext context) {
               return new MovieDetailPage(movie, imageTag: imageTag);
             }
         )
     );
   }
 
+  //网络请求
   getMovieListData() async {
     //createHttpClient() 来自 package:flutter/services.dart，居然不能自己导包。
     String response = await createHttpClient().read(
@@ -59,14 +71,15 @@ class MovieListPageState extends State<MovieListPage> {
             'apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&'
             'start=0&count=100&client=&udid=');
 
+    // setState 相当于 runOnUiThread
     setState(() {
-      _movies = Movie.allFromResponse(response);
+      movies = Movie.allFromResponse(response);
     });
   }
 
 
-  _buildMovieItem(BuildContext context, int index) {
-    Movie movie = _movies[index];
+  buildMovieItem(BuildContext context, int index) {
+    Movie movie = movies[index];
 
     var movieImage = new Padding(
       padding: const EdgeInsets.only(
@@ -105,6 +118,7 @@ class MovieListPageState extends State<MovieListPage> {
     );
 
     var movieItem = new GestureDetector(
+      //点击事件
       onTap: () => navigateToMovieDetailPage(movie, index),
 
       child: new Column(
