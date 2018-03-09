@@ -12,8 +12,6 @@ A new Flutter application.
 
 ## 联系我
 ### 公众号
-公众号
-
 我的公众号：吴小龙同学，欢迎交流～
 
 ![](https://open.weixin.qq.com/qr/code?username=MrWuXiaolong)
