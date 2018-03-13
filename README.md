@@ -17,4 +17,4 @@ A new Flutter application.
 ![](https://open.weixin.qq.com/qr/code?username=MrWuXiaolong)
 
 ### 微信群
-我有建读者群，程序猿交流群，聊聊技术、职场、创业、赚钱、泡妹子、撩汉子等，有兴趣可以加我微信，我的微信号：wuxiaolongtongxue，加我时，请备注下真名（我好友备注下），否则一律不通过。
+我有建微信读者群，程序猿交流群，聊聊技术、职场、创业、赚钱、泡妹子、撩汉子等，有兴趣可以加我微信，我的微信号：wuxiaolongtongxue，加我时，请备注下真名（我好友备注下），否则一律不通过。
