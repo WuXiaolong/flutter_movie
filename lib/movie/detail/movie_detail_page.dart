@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_movie/movie/detail/movie_detail.dart';
 import 'package:flutter_movie/movie/list/movie.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 
 class MovieDetailPage extends StatefulWidget {
 
@@ -63,7 +63,7 @@ class MovieDetailPageState extends State<MovieDetailPage> {
   }
 
   getMovieDetailData() async {
-    String response = await createHttpClient().read(
+    String response = await read(
         'http://api.douban.com/v2/movie/subject/' + widget.movie.movieId);
 
     setState(() {
