@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'package:flutter_movie/movie/list/movie.dart';
 import 'package:flutter_movie/movie/detail/movie_detail_page.dart';
 
@@ -66,10 +66,7 @@ class MovieListPageState extends State<MovieListPage> {
   //网络请求
   getMovieListData() async {
     //createHttpClient() 来自 package:flutter/services.dart，居然不能自己导包。
-    String response = await createHttpClient().read(
-        'https://api.douban.com/v2/movie/in_theaters?'
-            'apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&'
-            'start=0&count=100&client=&udid=');
+    String response = await read('https://api.douban.com/v2/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&start=0&count=100&client=&udid=');
 
     // setState 相当于 runOnUiThread
     setState(() {
