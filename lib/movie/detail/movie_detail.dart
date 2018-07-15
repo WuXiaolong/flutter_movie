@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 class MovieDetail {
   final String title;
   final double average;
@@ -12,22 +10,21 @@ class MovieDetail {
   final String movieId;
   final String summary;
 
-
   //构造函数
   MovieDetail({
-    @required this.title,
-    @required this.average,
-    @required this.collectCount,
-    @required this.smallImage,
-    @required this.director,
-    @required this.cast,
-    @required this.movieId,
-    @required this.summary,
+    this.title,
+    this.average,
+    this.collectCount,
+    this.smallImage,
+    this.director,
+    this.cast,
+    this.movieId,
+    this.summary,
   });
 
-
-  static MovieDetail allFromResponse(String json) {
-    return fromMap(JSON.decode(json));
+  static MovieDetail decodeData(String jsonData) {
+    var data = json.decode(jsonData);
+    return fromMap(data);
   }
 
   static MovieDetail fromMap(Map map) {

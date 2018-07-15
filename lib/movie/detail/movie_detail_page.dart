@@ -1,17 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_movie/movie/detail/movie_detail.dart';
 import 'package:flutter_movie/movie/list/movie.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter/services.dart';
 
 class MovieDetailPage extends StatefulWidget {
-
-
   final Movie movie;
   final Object imageTag;
 
-  MovieDetailPage(this.movie, {
+  MovieDetailPage(
+    this.movie, {
     @required this.imageTag,
   });
 
@@ -22,6 +23,25 @@ class MovieDetailPage extends StatefulWidget {
 class MovieDetailPageState extends State<MovieDetailPage> {
   MovieDetail movieDetail;
 
+  @override
+  void initState() {
+    super.initState();
+    getMovieDetailData();
+  }
+
+  getMovieDetailData() async {
+    var httpClient = new HttpClient();
+    var url = 'http://api.douban.com/v2/movie/subject/' + widget.movie.movieId;
+    var request = await httpClient.getUrl(Uri.parse(url));
+    var response = await request.close();
+    if (response.statusCode == HttpStatus.OK) {
+      var jsonData = await response.transform(utf8.decoder).join();
+      // setState 相当于 runOnUiThread
+      setState(() {
+        movieDetail = MovieDetail.decodeData(jsonData.toString());
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,30 +65,13 @@ class MovieDetailPageState extends State<MovieDetailPage> {
       );
     }
 
-
     return new Scaffold(
       appBar: new AppBar(
         //注意这里的写法 widget.movie，拿到 MovieDetailPage
         title: new Text(widget.movie.title),
       ),
       body: content,
-
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getMovieDetailData();
-  }
-
-  getMovieDetailData() async {
-    String response = await createHttpClient().read(
-        'http://api.douban.com/v2/movie/subject/' + widget.movie.movieId);
-
-    setState(() {
-      movieDetail = MovieDetail.allFromResponse(response);
-    });
   }
 
   setData(MovieDetail movieDetail) {
@@ -78,7 +81,8 @@ class MovieDetailPageState extends State<MovieDetailPage> {
         child: new Image.network(
           movieDetail.smallImage,
           width: 120.0,
-          height: 140.0,),
+          height: 140.0,
+        ),
       ),
     );
 
@@ -89,9 +93,7 @@ class MovieDetailPageState extends State<MovieDetailPage> {
         new Text(
           movieDetail.title,
           textAlign: TextAlign.left,
-          style: new TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 14.0
-          ),
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
         ),
         new Text('导演：' + movieDetail.director),
         new Text('主演：' + movieDetail.cast),
@@ -99,7 +101,8 @@ class MovieDetailPageState extends State<MovieDetailPage> {
           movieDetail.collectCount.toString() + '人看过',
           style: new TextStyle(
             fontSize: 12.0,
-            color: Colors.redAccent,),
+            color: Colors.redAccent,
+          ),
         ),
         new Text('评分：' + movieDetail.average.toString()),
         new Text(
