@@ -48,7 +48,7 @@ class MovieDetail {
     }
     return new MovieDetail(
       title: map['title'],
-      average: map['rating']['average'],
+      average: map['rating']['average'] == 0 ? 0.0 : map['rating']['average'],
       collectCount: map['collect_count'],
       smallImage: map['images']['small'],
       director: d,
