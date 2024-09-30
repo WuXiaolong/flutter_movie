@@ -8,7 +8,7 @@ Android Studio 3.1.3
 ![](http://7q5c2h.com1.z0.glb.clouddn.com/Flutter3.gif)
 
 # 文章介绍
-个人博客：[Flutter 初尝：从 Java 无缝过渡](http://wuxiaolong.me/2018/03/08/Flutter/)
+个人博客：[Flutter 初尝：从 Java 无缝过渡](https://wuxiaolong.github.io/2018/03/08/Flutter/)
 
 公众号：[Flutter 初尝：从 Java 无缝过渡](http://mp.weixin.qq.com/s/qDigdIChRccN_-AdG62Nkw)
 
